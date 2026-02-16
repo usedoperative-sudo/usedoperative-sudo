@@ -1,16 +1,21 @@
-## Hi there 👋
+# Hi, I'm Used 👋 (@usedoperative-sudo)
 
-<!--
-**usedoperative-sudo/usedoperative-sudo** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+An enthusiast **System Modder & Backend Developer** specializing in Android, Linux, and iOS Sideloading. 
 
-Here are some ideas to get you started:
+### 🛠 Technical Skills
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- **Android Modding:** Custom ROMs, GSI (Generic System Images), Unbricking (Fastboot/Odin), Play Integrity bypassing, and Magisk/APatch expert.
+- **Linux Systems:** Root SSH management, X11/Wayland transitions, and Windows software compatibility (Wine/Proton).
+- **Development:** - 🐍 **Python/Flask:** Lightweight APIs and automation backends.
+  - ⚙️ **Low-level:** Porting C++ tools to Termux (No-root/No-PRoot) and simple Rust patching.
+  - 🍏 **iOS:** Sideloading solutions and IPA signing automation.
+
+### 🚀 Featured Project: [flask-ipa-signer](http://github.com/usedoperative-sudo/flask-ipa-signer)
+A Python-based backend designed for remote IPA signing using `zsign` and Cloudflared. 
+- *Status:* Working on a "Sideload as a Service" implementation.
+
+---
+### 📬 Contact & Support
+- **Email:** usedoperative@gmail.com
+- **Crypto:** `LaeCHqt3A8woSkUc1Gjx414HaFvRg47bXX` (LTC)
+- **Note:** Available for remote technical support, custom API development, and specialized modding consulting.
