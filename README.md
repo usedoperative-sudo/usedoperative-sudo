@@ -17,5 +17,5 @@ A Python-based backend designed for remote IPA signing using `zsign` and Cloudfl
 ---
 ### 📬 Contact & Support
 - **Email:** usedoperative@gmail.com
-- **Crypto:** `LRTSbNi2enLK8d6KCWoJkhmCd8ZULgPXB7` (LTC)
+- **Crypto:** `LNChC46rqF5zGxrUjsMxdd5rCMfP69EakA` (LTC)
 - **Note:** Available for remote technical support, custom API development, and specialized modding consulting.
