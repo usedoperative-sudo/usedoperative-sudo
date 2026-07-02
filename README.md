@@ -10,9 +10,11 @@ An enthusiast **System Modder & Backend Developer** specializing in Android, Lin
   - ⚙️ **Low-level:** Porting C++ tools to Termux (No-root/No-PRoot) and simple Rust patching.
   - 🍏 **iOS:** Sideloading solutions and IPA signing automation.
 
-### 🚀 Featured Project: [flask-ipa-signer](http://github.com/usedoperative-sudo/flask-ipa-signer)
-A Python-based backend designed for remote IPA signing using `zsign` and Cloudflared. 
-- *Status:* Working on a "Sideload as a Service" implementation.
+### 🚀 Featured Project: [termux-usbmuxd](http://github.com/usedoperative-sudo/termux-usbmuxd)
+Run usbmuxd on unrooted Termux to communicate with iOS devices over USB.
+No root required. Works by passing USB device access through termux-usb (Termux:API).
+
+- *Status:* Working on a "Termux-to-iPhone" comunicator.
 
 ---
 ### 📬 Contact & Support
