@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import os
+import sys
+import time
+import urllib.parse
+import urllib.request
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def load_config():
+    with open(os.path.join(HERE, "config.json")) as f:
+        return json.load(f)
+
+
+CONFIG = load_config()
+BASE = CONFIG.get("url", f"http://127.0.0.1:{CONFIG.get('port', 8787)}")
+TOKEN = CONFIG["token"]
+RUN_TIMEOUT = int(os.environ.get("PHONE_CMD_TIMEOUT", "120"))
+
+
+def api(path, body=None, params=None, timeout=30):
+    url = BASE + path
+    if params:
+        url += "?" + urllib.parse.urlencode(params)
+    data = json.dumps(body).encode() if body is not None else None
+    headers = {"Content-Type": "application/json"} if body is not None else {}
+    req = urllib.request.Request(url, data=data, headers=headers)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read())
+
+
+def run(cmd):
+    rid = api("/send", {"cmd": cmd}, params={"token": TOKEN})["id"]
+    print(f"\u2192 #{rid}: {cmd}", file=sys.stderr, flush=True)
+    deadline = time.time() + RUN_TIMEOUT
+    while time.time() < deadline:
+        res = api("/result", params={"token": TOKEN, "id": rid}, timeout=10)
+        if res.get("pending"):
+            time.sleep(0.5)
+            continue
+        if res.get("output"):
+            sys.stdout.write(res["output"])
+            if not res["output"].endswith("\n"):
+                sys.stdout.write("\n")
+        if res.get("code"):
+            print(f"\u21e6 #{rid} exit={res['code']}", file=sys.stderr, flush=True)
+        return res
+    print(f"\u23f3 #{rid} timed out after {RUN_TIMEOUT}s", file=sys.stderr)
+    return None
+
+
+def interactive():
+    print("iSH relay shell — Ctrl-D to exit", file=sys.stderr)
+    while True:
+        try:
+            line = input("iSH $ ")
+        except (EOFError, KeyboardInterrupt):
+            print()
+            break
+        if line.strip():
+            run(line)
+
+
+def main():
+    ap = argparse.ArgumentParser(prog="phone-cmd")
+    ap.add_argument("--status", action="store_true", help="check if the phone agent is online")
+    ap.add_argument("--interactive", "-i", action="store_true", help="interactive shell")
+    ap.add_argument("command", nargs=argparse.REMAINDER, help="command to run on iSH")
+    args = ap.parse_args()
+
+    if args.status:
+        try:
+            st = api("/status", params={"token": TOKEN}, timeout=10)
+            state = "ONLINE" if st["online"] else "offline"
+            print(f"agent {state} (last poll {st['last_poll_age']}s ago, {st['pending']} queued)")
+        except Exception as e:
+            print(f"relay unreachable: {e}")
+        return
+
+    if args.interactive or not args.command:
+        interactive()
+        return
+
+    run(" ".join(args.command))
+
+
+if __name__ == "__main__":
+    main()
